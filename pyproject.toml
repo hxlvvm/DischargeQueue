@@ -8,6 +8,8 @@ version = "0.1.0"
 description = "Capacity-aware 30-day readmission review queue on the UCI Diabetes 130-US hospitals data"
 requires-python = ">=3.10"
 license = {text = "MIT"}
+dependencies = ["pandas>=2.2", "numpy>=2.0", "scikit-learn>=1.6,<1.7", "joblib>=1.4", "fastapi>=0.115",
+                "pydantic>=2.11", "uvicorn>=0.34", "streamlit>=1.44", "altair>=5.5"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

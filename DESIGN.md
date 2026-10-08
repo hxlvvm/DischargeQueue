@@ -1,6 +1,6 @@
 # Design decisions
 
-Each decision below was fixed before the test set was scored. The commit history shows the order:
+Each modelling decision below was fixed before the test set was scored. The commit history shows the order:
 
 1. `8160aef` pre-registered the cohort, label, split, candidates and selection rule.
 2. `6f912d2` fixed the capacity threshold and added the one-shot test evaluation.
@@ -58,9 +58,20 @@ There are no dates, so a time-based split is impossible. Encounter-id order is n
 
 Why not LACE? It needs a Charlson comorbidity score, and three diagnosis codes cannot supply one.
 
+**Ties in the learned baseline.** It uses three visit counts, so it produces only 335 distinct scores on the test
+set, and the 10 % cut falls inside a tie group of 141 discharges. The reported numbers break ties by row order.
+The tie-aware expected value counts the boundary group fractionally. At 10 % it gives recall 19.85 % (reported
+19.79 %) and precision 23.0 % (reported 22.9 %), so the headline gain is unchanged. At 30 % the boundary group
+holds 2,573 discharges and the expected baseline recall is 44.5 % (reported 44.8 %). The model's scores have no
+material ties.
+
 ## Model choice
 
 Candidates: L2 logistic regression and histogram gradient boosting.
+
+Gradient boosting's early stopping holds out a random 10 % of *training rows*, so one training patient's
+encounters can sit on both sides of that internal split. This affects only when boosting stops. The test set is
+patient-disjoint, so the reported numbers are not affected.
 
 The rule, written in `config.py` before training: keep the logistic regression, which is easier to explain, unless
 gradient boosting improves validation average precision by at least 0.005. Boosting improved it by 0.009, so it

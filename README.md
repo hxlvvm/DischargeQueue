@@ -108,7 +108,8 @@ The data are from Strack B., DeShazo J. P., Gennings C., et al. (2014), *Impact 
 Readmission Rates: Analysis of 70,000 Clinical Database Patient Records*, BioMed Research International. The
 dataset is "Diabetes 130-US Hospitals for Years 1999-2008", UCI Machine Learning Repository, doi:10.24432/C5230J,
 under a [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) licence. Changes made here: cohort filtering,
-derived features, and model scores (`artifacts/test_scores.csv.gz`). The raw data are not redistributed; the
-download script fetches them.
+derived features, and model scores. `artifacts/test_scores.csv.gz` redistributes a subset of columns for the
+held-out discharges, with scores added, as CC BY 4.0 permits. The full raw table is not included; the download
+script fetches it.
 
 Code: MIT. This is a research and portfolio project, not a medical device or clinical decision tool.
