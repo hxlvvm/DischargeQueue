@@ -1,0 +1,43 @@
+{
+ "commit": "8160aeff7d7c53b4105365c506373eeec5e96d9c",
+ "seed": 20261008,
+ "chosen": "full_gbm",
+ "threshold": 0.1934511123915613,
+ "rule": "full_gbm only if val AP >= full_lr AP + 0.005",
+ "n": {
+  "train": 58154,
+  "val": 9684,
+  "calib": 9840
+ },
+ "positives": {
+  "train": 6468,
+  "val": 1080,
+  "calib": 1160
+ },
+ "validation": {
+  "prior_inpatient_rule": {
+   "auroc": 0.6074352798870465,
+   "ap": 0.19437424687649713,
+   "precision_at_capacity": 0.24251805985552116,
+   "recall_at_capacity": 0.2175925925925926
+  },
+  "utilisation_lr": {
+   "auroc": 0.6168525190695111,
+   "ap": 0.1854687226410942,
+   "precision_at_capacity": 0.2476780185758514,
+   "recall_at_capacity": 0.2222222222222222
+  },
+  "full_lr": {
+   "auroc": 0.6701045594641597,
+   "ap": 0.21438614509131332,
+   "precision_at_capacity": 0.2631578947368421,
+   "recall_at_capacity": 0.2361111111111111
+  },
+  "full_gbm": {
+   "auroc": 0.6795517696334177,
+   "ap": 0.22332670486683176,
+   "precision_at_capacity": 0.27347781217750256,
+   "recall_at_capacity": 0.24537037037037038
+  }
+ }
+}

@@ -44,11 +44,13 @@ def main():
     model = candidates[chosen]
     # isotonic calibration on held-out patients; the queue still ranks on the uncalibrated score
     calibrator = CalibratedClassifierCV(FrozenEstimator(model), method="isotonic").fit(X["calib"], y["calib"])
+    # score above which a discharge falls in the top REVIEW_FRACTION, fixed on the calibration patients
+    threshold = float(np.quantile(model.predict_proba(X["calib"])[:, 1], 1 - REVIEW_FRACTION))
 
     ARTIFACTS.mkdir(exist_ok=True)
     joblib.dump({"model": model, "calibrator": calibrator, "baseline": candidates["utilisation_lr"],
-                 "chosen": chosen}, ARTIFACTS / "model.joblib", compress=3)
-    rec = {"commit": git_commit(), "seed": SEED, "chosen": chosen, "rule": f"full_gbm only if val AP >= full_lr AP + {GBM_MIN_AP_GAIN}",
+                 "chosen": chosen, "threshold": threshold}, ARTIFACTS / "model.joblib", compress=3)
+    rec = {"commit": git_commit(), "seed": SEED, "chosen": chosen, "threshold": threshold, "rule": f"full_gbm only if val AP >= full_lr AP + {GBM_MIN_AP_GAIN}",
            "n": {s: int(len(v)) for s, v in y.items()}, "positives": {s: int(v.sum()) for s, v in y.items()},
            "validation": val}
     (ARTIFACTS / "selection.json").write_text(json.dumps(rec, indent=1))
